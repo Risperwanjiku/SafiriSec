@@ -122,3 +122,10 @@ Open your browser at `http://localhost:5173`
 - A secondary spike exists at **1M+ KES** (large-scale fraud)
 - The dataset has a severe class imbalance - only **0.13%** of transactions are fraudulent
 
+## Roadmap
+
+- [x] Version 1 - PaySim data pipeline + XGBoost model + React dashboard
+- [ ] Version 2 - Live threat feeds via AbuseIPDB API
+- [ ] Version 2 - Kali Linux network traffic simulation
+- [ ] Version 2 - AWS Lambda serverless deployment
+- [ ] Version 3 - Real-time transaction streaming + alerting system
