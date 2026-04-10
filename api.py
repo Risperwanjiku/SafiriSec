@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify
 from flask_cors import CORS
 import pandas as pd
 import joblib
@@ -7,18 +7,22 @@ import random
 from datetime import datetime, timedelta
 import os
 
-# Path to React build folder
-REACT_BUILD = os.path.expanduser('~/SafiriSec/dist')
+app = Flask(__name__)
+CORS(app)  # Allow React dev server to fetch data from Flask
 
-app = Flask(__name__, static_folder=REACT_BUILD, static_url_path='')
-CORS(app)
+# ── File paths — works on both Windows and Linux ──────────────────────────────
+BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, 'models', 'fraud_model.pkl')
+DATA_PATH  = os.path.join(BASE_DIR, 'data', 'PS_20174392719_1491204439457_log.csv')
 
 # ── Load model and data once at startup ──────────────────────────────────────
 print("Loading model and data...")
+print(f"Looking for model at: {MODEL_PATH}")
+print(f"Looking for data at:  {DATA_PATH}")
 
-model = joblib.load('/home/annrisper/SafiriSec/models/fraud_model.pkl')
+model = joblib.load(MODEL_PATH)
 
-df = pd.read_csv('/home/annrisper/SafiriSec/data/PS_20174392719_1491204439457_log.csv')
+df = pd.read_csv(DATA_PATH)
 df = df[df['type'].isin(['CASH_OUT', 'TRANSFER'])].copy()
 df['type_label'] = df['type'].copy()
 
@@ -42,17 +46,6 @@ recall   = round(caught/afraud*100, 1)
 prec     = round(caught/pfraud*100, 1)
 accuracy = round((caught+tn)/total*100, 2)
 f1       = round(2*prec*recall/(prec+recall), 1)
-
-# ── Serve React frontend ──────────────────────────────────────────────────────
-@app.route('/')
-def serve():
-    return send_from_directory(app.static_folder, 'index.html')
-
-@app.route('/<path:path>')
-def serve_static(path):
-    if os.path.exists(os.path.join(app.static_folder, path)):
-        return send_from_directory(app.static_folder, path)
-    return send_from_directory(app.static_folder, 'index.html')
 
 # ── API Routes ────────────────────────────────────────────────────────────────
 @app.route('/api/metrics')
@@ -136,13 +129,13 @@ def flagged():
         dec      = random.randint(1, 9)
 
         if is_fraud == 1:
-            risk = random.randint(88, 99)
+            risk   = random.randint(88, 99)
             status = "Confirmed Fraud"
         elif amt > 100000:
-            risk = random.randint(75, 87)
+            risk   = random.randint(75, 87)
             status = "Under Review"
         else:
-            risk = random.randint(60, 74)
+            risk   = random.randint(60, 74)
             status = "Cleared"
 
         result.append({
@@ -167,5 +160,5 @@ def download():
     }
 
 if __name__ == '__main__':
-    print(f"\n🛡️  SafiriSec running at: http://localhost:5000\n")
+    print(f"\n🛡️  SafiriSec API running at: http://localhost:5000\n")
     app.run(debug=False, port=5000)
