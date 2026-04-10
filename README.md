@@ -1,15 +1,15 @@
 # SafiriSec
 ### Mobile Money Fraud Detection & Visualization Dashboard
 
-> A cloud-native machine learning system that detects suspicious mobile money transactions and visualizes fraud patterns through an interactive web dashboard - built for the African fintech context.
+> A cloud native machine learning system that detects suspicious mobile money transactions and visualizes fraud patterns through an interactive web dashboard built for the African fintech context.
 
 ---
 
 ## Overview
 
-Mobile money platforms like M-Pesa process millions of transactions daily across Africa. SafiriSec simulates how a real-world fraud detection system would flag and analyze suspicious activity within such an ecosystem.
+Mobile money platforms like Mpesa process millions of transactions daily across Africa. SafiriSec simulates how a real-world fraud detection system would flag and analyze suspicious activity within such an ecosystem.
 
-Built using the **PaySim synthetic dataset** - a realistic simulation of M-Pesa-style transactions - SafiriSec combines machine learning, data analysis, and a modern React dashboard to surface fraud patterns in an interpretable and actionable way.
+Built using the **PaySim synthetic dataset** - a realistic simulation of Mpesa style transactions - SafiriSec combines machine learning, data analysis, and a modern React dashboard to surface fraud patterns in an interpretable and actionable way.
 
 ---
 
@@ -122,26 +122,9 @@ Open your browser at `http://localhost:5173`
 - A secondary spike exists at **1M+ KES** (large-scale fraud)
 - The dataset has a severe class imbalance - only **0.13%** of transactions are fraudulent
 
----
 
-## Roadmap
 
-- [x] Version 1 - PaySim data pipeline + XGBoost model + React dashboard
-- [ ] Version 2 - Live threat feeds via AbuseIPDB API
-- [ ] Version 2 - Kali Linux network traffic simulation
-- [ ] Version 2 - AWS Lambda serverless deployment
-- [ ] Version 3 - Real-time transaction streaming + alerting system
 
----
-
-## Author
-
-**Annrisper Wanjiku**
-Final Year Computer Science Student - Daystar University, Nairobi, Kenya
-
-GitHub: https://github.com/Risperwanjiku
-
----
 
 ## License
 
